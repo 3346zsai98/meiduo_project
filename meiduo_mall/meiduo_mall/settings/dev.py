@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.users',
+    'apps.contents',
+    'apps.verifications',
+    'apps.oauth',
+    'apps.areas',
+    'apps.goods',
+
 ]
 
 MIDDLEWARE = [
@@ -121,6 +127,20 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
+    "verify_image_code": { #  # 保存图片验证码--2号库
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "sms_code": {  # 保存短信验证码--3号库
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/3",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
@@ -195,3 +215,38 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'users.User'
+
+
+# 指定自定义的用户认证后端
+AUTHENTICATION_BACKENDS = ['apps.users.utils.UsernameMobileAuthBackend']
+
+# 重定向到登陆页面
+LOGIN_URL = '/user/login/'
+
+# QQ登陆参数
+# appid
+QQ_CLIENT_ID = '101518219'
+# appkey
+QQ_CLIENT_SECRET = '418d84ebdc7241efb79536886ae95224'
+# 回调地址
+QQ_REDIRECT_URI = 'http://www.meiduo.site:8000/oauth_callback'
+
+# 发送邮件配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 指定邮件后端
+EMAIL_HOST = 'smtp.163.com' # 发邮件主机
+EMAIL_PORT = 25 # 发邮件端口
+EMAIL_HOST_USER = 'hmmeiduo@163.com' # 授权的邮箱
+EMAIL_HOST_PASSWORD = 'hmmeiduo123' # 邮箱授权时获得的密码，非注册登录密码
+EMAIL_FROM = '美多商城<hmmeiduo@163.com>' # 发件人抬头
+EMAIL_ACTIVE_URL = 'http://www.meiduo.site:8000/emails/verification/' #激活地址
+EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/' # 邮箱验证连接
+
+
+# 指定自定义的Django文件存储类
+DEFAULT_FILE_STORAGE = 'utils.fastdfs.fastdfs_storage.FastDFSStorage'
+
+# FastDFS相关参数
+# FDFS_BASE_URL = 'http://192.168.142.136:8888/'
+FDFS_BASE_URL = 'http://image.meiduo.site:8888/'
+
+
