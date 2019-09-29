@@ -28,4 +28,17 @@ urlpatterns = [
     url(r'^', include('apps.oauth.urls', namespace="qq")),
     # 5.城市数据
     url(r'^', include('apps.areas.urls', namespace="areas")),
+    # 6.商品列表
+    url(r'^', include('apps.goods.urls', namespace="goods")),
+    # 7.购物车
+    url(r'^', include('apps.carts.urls', namespace='carts')),
+    # 8.订单
+    url(r'^', include('apps.orders.urls', namespace='orders')),
+    # 9.支付
+    url(r'^', include('apps.payment.urls', namespace='payment')),
+    # 10. 搜索
+    url(r'^search/', include('haystack.urls')),
+    # 11.　微博登陆
+    url(r'^', include('apps.weibo.urls', namespace='weibo')),
+
 ]

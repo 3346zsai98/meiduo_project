@@ -4,7 +4,7 @@ var vm = new Vue({
     delimiters: ['[[', ']]'],
     data: {
         host,
-        skus: []
+        skus: skus
     },
     mounted: function(){
         // 渲染评价界面
@@ -58,6 +58,7 @@ var vm = new Vue({
                     })
                     .then(response => {
                         if (response.data.code == '0') {
+                            alert(response.data.errmsg)
                             // 删除评价后的商品
                             this.skus.splice(index, 1);
                         } else if (response.data.code == '4101') {

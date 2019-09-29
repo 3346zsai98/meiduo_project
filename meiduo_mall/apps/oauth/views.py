@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.views import View
 from pymysql import DatabaseError
 
+from apps.carts.utils import merge_cart_cookie_to_redis
 from apps.oauth.models import OAuthQQUser
 from apps.users.models import User
 from meiduo_mall.settings.dev import logger
@@ -102,7 +103,8 @@ class QQAuthUserView(View):
         # 2. cookie保存用户名
         response = redirect(reverse('contents:index'))
         response.set_cookie('username', user.username, max_age=14 * 2 * 24 * 3600)
-
+        # 合并购物车
+        merge_cart_cookie_to_redis(request=request, response=response)
         # 5.返回首页
         return response
 

@@ -43,7 +43,13 @@ INSTALLED_APPS = [
     'apps.oauth',
     'apps.areas',
     'apps.goods',
-
+    'apps.carts',
+    'apps.orders',
+    'apps.payment',
+    'apps.weibo',
+    # 第三方应用
+    'django_crontab', # 定时任务
+    'haystack', # 全文检索
 ]
 
 MIDDLEWARE = [
@@ -83,6 +89,23 @@ WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+    # 配置主从Mysql数据库
+    # 'default': {  # 写（主机）
+    #     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+    #     'HOST': '127.0.0.1',  # 数据库主机
+    #     'PORT': 3306,  # 数据库端口
+    #     'USER': 'itheima',  # 数据库用户名
+    #     'PASSWORD': '123456',  # 数据库用户密码
+    #     'NAME': 'meiduo'  # 数据库名字
+    # },
+    # 'slave': {  # 读（从机）
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'PORT': 8306,
+    #     'HOST': '127.0.0.1',  # 数据库从机
+    #     'USER': 'root',
+    #     'PASSWORD': 'mysql',
+    #     'NAME': 'meiduo'
+    # },
     'default': {
         'ENGINE': 'django.db.backends.mysql', # 数据库引擎
         'HOST': '127.0.0.1', # 数据库主机
@@ -92,6 +115,9 @@ DATABASES = {
         'NAME': 'meiduo' # 数据库名字
     },
 }
+
+# 配置数据库读写路由
+# DATABASE_ROUTERS = ['utils.db_router.MasterSlaveDBRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -127,7 +153,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
-    "verify_image_code": { #  # 保存图片验证码--2号库
+    "verify_image_code": { # 保存图片验证码--2号库
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/2",
         "OPTIONS": {
@@ -137,6 +163,20 @@ CACHES = {
     "sms_code": {  # 保存短信验证码--3号库
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/3",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "history": {  # 用户浏览记录
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/4",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "carts": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/5",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -184,7 +224,7 @@ LOGGING = {
             'propagate': True,  # 是否继续传递日志信息
             'level': 'INFO',  # 日志器接收的最低日志级别
         },
-    }
+    },
 }
 # 实例化日志对象
 import logging
@@ -248,5 +288,41 @@ DEFAULT_FILE_STORAGE = 'utils.fastdfs.fastdfs_storage.FastDFSStorage'
 # FastDFS相关参数
 # FDFS_BASE_URL = 'http://192.168.142.136:8888/'
 FDFS_BASE_URL = 'http://image.meiduo.site:8888/'
+
+# 支付宝SDK配置参数
+ALIPAY_APPID = '2016101300673760'
+ALIPAY_DEBUG = True
+ALIPAY_URL = 'https://openapi.alipaydev.com/gateway.do'
+ALIPAY_RETURN_URL = 'http://www.meiduo.site:8000/payment/status/'
+
+# 定时任务
+CRONJOBS = [
+    # 每1分钟生成一次首页静态文件
+    ('*/1 * * * *', 'apps.contents.crons.generate_static_index_html', '>> ' + os.path.join(BASE_DIR, 'logs/crontab.log'))
+]
+
+# 解决crontab中文问题
+CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'
+
+
+# 配置Haystack
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://192.168.142.137:9200/', # Elasticsearch服务器ip地址，端口号固定为9200
+        'INDEX_NAME': 'meiduo', # Elasticsearch建立的索引库的名称
+    },
+}
+
+# 当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 每页显示的页数
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 3
+
+# 微博登陆
+APP_KEY='3305669385'
+APP_SECRET='74c7bea69d5fc64f5c3b80c802325276'
+REDIRECT_URL='http://www.meiduo.site:8000/sina_callback'
 
 
