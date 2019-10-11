@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -47,16 +47,20 @@ INSTALLED_APPS = [
     'apps.orders',
     'apps.payment',
     'apps.weibo',
+    'apps.meiduo_admin',
     # 第三方应用
     'django_crontab', # 定时任务
     'haystack', # 全文检索
+    'corsheaders', # 解决跨域问题
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -325,4 +329,29 @@ APP_KEY='3305669385'
 APP_SECRET='74c7bea69d5fc64f5c3b80c802325276'
 REDIRECT_URL='http://www.meiduo.site:8000/sina_callback'
 
+# 添加白名单
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'http://www.meiduo.site:8080',
+    'http://api.meiduo.site:8000'
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 
+# 配置JWT 身份验证
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+# jwt 过期时间
+JWT_AUTH = {
+    # 过期时间
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=14),
+    # 自定义响应体
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.meiduo_admin.utils.jwt_handler.jwt_response_payload_handler',
+    # 自定义载荷
+    'JWT_PAYLOAD_HANDLER': 'apps.meiduo_admin.utils.jwt_handler.meiduo_payload_handler',
+}

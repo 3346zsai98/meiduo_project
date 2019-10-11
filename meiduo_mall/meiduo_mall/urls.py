@@ -41,4 +41,7 @@ urlpatterns = [
     # 11.　微博登陆
     url(r'^', include('apps.weibo.urls', namespace='weibo')),
 
+    # 后台
+    url(r'^meiduo_admin/', include('apps.meiduo_admin.urls')),
+
 ]
