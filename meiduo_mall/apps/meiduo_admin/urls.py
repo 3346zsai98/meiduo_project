@@ -1,9 +1,11 @@
 from django.conf.urls import url
 from rest_framework_jwt.views import obtain_jwt_token
 
+from apps.meiduo_admin.views import spuzsg
+from apps.meiduo_admin.views import specs
 from apps.meiduo_admin.views import statistical
 from apps.meiduo_admin.views import users
-
+from rest_framework.routers import DefaultRouter
 urlpatterns = [
     url(r'^authorizations/$', obtain_jwt_token),
     # 1.用户总数统计
@@ -20,7 +22,13 @@ urlpatterns = [
     url(r'^statistical/goods_day_views/$', statistical.GoodsDayView.as_view()),
 
     # 用户管理
-    # 获取查询用户
+    # 1.获取查询用户
     url(r'^users/$', users.UserView.as_view()),
+    # 2.保存规格表数据
+    url('^goods/simple/$', spuzsg.SPUSimpleViewSet.as_view()),
 
 ]
+
+router = DefaultRouter()
+router.register('goods/specs', specs.SpecsViewSet, base_name='specs')
+urlpatterns += router.urls
