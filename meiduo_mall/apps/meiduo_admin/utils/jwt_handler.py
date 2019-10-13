@@ -1,5 +1,8 @@
 # from rest_framework_jwt.utils import jwt_response_payload_handler
 from rest_framework_jwt.utils import jwt_payload_handler
+
+
+# 自定义响应体
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
@@ -7,6 +10,8 @@ def jwt_response_payload_handler(token, user=None, request=None):
         'user_id': user.id
     }
 
+
+# 自定义载荷
 def meiduo_payload_handler(user):
     # 重用某个方法中的代码，则调用这个方法执行
     payload = jwt_payload_handler(user)

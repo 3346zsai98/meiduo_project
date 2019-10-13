@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['www.meiduo.site']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,9 +48,9 @@ INSTALLED_APPS = [
     'apps.weibo',
     'apps.meiduo_admin',
     # 第三方应用
-    'django_crontab', # 定时任务
-    'haystack', # 全文检索
-    'corsheaders', # 解决跨域问题
+    'django_crontab',  # 定时任务
+    'haystack',  # 全文检索
+    'corsheaders',  # 解决跨域问题
     'rest_framework',
 ]
 
@@ -71,7 +70,7 @@ ROOT_URLCONF = 'meiduo_mall.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',  # 1.jinja2模板引擎
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 2.模本文件夹路径
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # 2.模本文件夹路径
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,7 +86,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -111,12 +109,12 @@ DATABASES = {
     #     'NAME': 'meiduo'
     # },
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # 数据库引擎
-        'HOST': '127.0.0.1', # 数据库主机
-        'PORT': 3306, # 数据库端口
-        'USER': 'itheima', # 数据库用户名
-        'PASSWORD': '123456', # 数据库用户密码
-        'NAME': 'meiduo' # 数据库名字
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+        'HOST': '127.0.0.1',  # 数据库主机
+        'PORT': 3306,  # 数据库端口
+        'USER': 'itheima',  # 数据库用户名
+        'PASSWORD': '123456',  # 数据库用户密码
+        'NAME': 'meiduo'  # 数据库名字
     },
 }
 
@@ -141,23 +139,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 CACHES = {
-    "default": { # 默认
+    "default": {  # 默认
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
-    "session": { # session
+    "session": {  # session
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
-    "verify_image_code": { # 保存图片验证码--2号库
+    "verify_image_code": {  # 保存图片验证码--2号库
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/2",
         "OPTIONS": {
@@ -188,7 +185,6 @@ CACHES = {
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
-
 
 LOGGING = {
     'version': 1,
@@ -232,9 +228,9 @@ LOGGING = {
 }
 # 实例化日志对象
 import logging
+
 logger = logging.getLogger('django')
 logger.info('测试logging模块info')
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -249,7 +245,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -259,7 +254,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'users.User'
-
 
 # 指定自定义的用户认证后端
 AUTHENTICATION_BACKENDS = ['apps.users.utils.UsernameMobileAuthBackend']
@@ -276,15 +270,14 @@ QQ_CLIENT_SECRET = '418d84ebdc7241efb79536886ae95224'
 QQ_REDIRECT_URI = 'http://www.meiduo.site:8000/oauth_callback'
 
 # 发送邮件配置
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 指定邮件后端
-EMAIL_HOST = 'smtp.163.com' # 发邮件主机
-EMAIL_PORT = 25 # 发邮件端口
-EMAIL_HOST_USER = 'hmmeiduo@163.com' # 授权的邮箱
-EMAIL_HOST_PASSWORD = 'hmmeiduo123' # 邮箱授权时获得的密码，非注册登录密码
-EMAIL_FROM = '美多商城<hmmeiduo@163.com>' # 发件人抬头
-EMAIL_ACTIVE_URL = 'http://www.meiduo.site:8000/emails/verification/' #激活地址
-EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/' # 邮箱验证连接
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # 指定邮件后端
+EMAIL_HOST = 'smtp.163.com'  # 发邮件主机
+EMAIL_PORT = 25  # 发邮件端口
+EMAIL_HOST_USER = 'hmmeiduo@163.com'  # 授权的邮箱
+EMAIL_HOST_PASSWORD = 'hmmeiduo123'  # 邮箱授权时获得的密码，非注册登录密码
+EMAIL_FROM = '美多商城<hmmeiduo@163.com>'  # 发件人抬头
+EMAIL_ACTIVE_URL = 'http://www.meiduo.site:8000/emails/verification/'  # 激活地址
+EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/'  # 邮箱验证连接
 
 # 指定自定义的Django文件存储类
 DEFAULT_FILE_STORAGE = 'utils.fastdfs.fastdfs_storage.FastDFSStorage'
@@ -302,19 +295,19 @@ ALIPAY_RETURN_URL = 'http://www.meiduo.site:8000/payment/status/'
 # 定时任务
 CRONJOBS = [
     # 每1分钟生成一次首页静态文件
-    ('*/1 * * * *', 'apps.contents.crons.generate_static_index_html', '>> ' + os.path.join(BASE_DIR, 'logs/crontab.log'))
+    (
+    '*/1 * * * *', 'apps.contents.crons.generate_static_index_html', '>> ' + os.path.join(BASE_DIR, 'logs/crontab.log'))
 ]
 
 # 解决crontab中文问题
 CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'
 
-
 # 配置Haystack
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://192.168.142.137:9200/', # Elasticsearch服务器ip地址，端口号固定为9200
-        'INDEX_NAME': 'meiduo', # Elasticsearch建立的索引库的名称
+        'URL': 'http://192.168.142.137:9200/',  # Elasticsearch服务器ip地址，端口号固定为9200
+        'INDEX_NAME': 'meiduo',  # Elasticsearch建立的索引库的名称
     },
 }
 
@@ -325,9 +318,9 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 3
 
 # 微博登陆
-APP_KEY='3305669385'
-APP_SECRET='74c7bea69d5fc64f5c3b80c802325276'
-REDIRECT_URL='http://www.meiduo.site:8000/sina_callback'
+APP_KEY = '3305669385'
+APP_SECRET = '74c7bea69d5fc64f5c3b80c802325276'
+REDIRECT_URL = 'http://www.meiduo.site:8000/sina_callback'
 
 # 添加白名单
 CORS_ORIGIN_WHITELIST = (
