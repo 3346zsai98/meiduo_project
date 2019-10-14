@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from rest_framework_jwt.views import obtain_jwt_token
 
+from apps.meiduo_admin.views import category
 from apps.meiduo_admin.views import spuzsg
 from apps.meiduo_admin.views import specs
 from apps.meiduo_admin.views import statistical
@@ -25,12 +26,17 @@ urlpatterns = [
     # 用户管理
     # 1.获取查询用户
     url(r'^users/$', users.UserView.as_view()),
+    # 商品管理
     # 2.保存规格表数据
     url('^goods/simple/$', spuzsg.SPUSimpleViewSet.as_view()),
+    # 3.三级分类查询
+    url(r'^skus/categories/$', category.Category3View.as_view()),
 
 ]
 
 router = DefaultRouter()
+# 规格表管理
 router.register('goods/specs', specs.SpecsViewSet, base_name='specs')
+# sku表管理
 router.register('skus', sku.SkuViewSet, base_name='skus')
 urlpatterns += router.urls
