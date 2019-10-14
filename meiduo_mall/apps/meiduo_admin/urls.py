@@ -5,6 +5,7 @@ from apps.meiduo_admin.views import spuzsg
 from apps.meiduo_admin.views import specs
 from apps.meiduo_admin.views import statistical
 from apps.meiduo_admin.views import users
+from apps.meiduo_admin.views import sku
 from rest_framework.routers import DefaultRouter
 urlpatterns = [
     url(r'^authorizations/$', obtain_jwt_token),
@@ -31,4 +32,5 @@ urlpatterns = [
 
 router = DefaultRouter()
 router.register('goods/specs', specs.SpecsViewSet, base_name='specs')
+router.register('skus', sku.SkuViewSet, base_name='skus')
 urlpatterns += router.urls
