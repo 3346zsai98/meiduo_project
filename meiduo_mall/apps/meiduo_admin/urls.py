@@ -31,7 +31,8 @@ urlpatterns = [
     url('^goods/simple/$', spuzsg.SPUSimpleViewSet.as_view()),
     # 3.三级分类查询
     url(r'^skus/categories/$', category.Category3View.as_view()),
-
+    # 4.查询指定的spu规格和选项
+    url('^goods/(?P<pk>\d+)/specs/$', specs.SpecOptionView.as_view()),
 ]
 
 router = DefaultRouter()

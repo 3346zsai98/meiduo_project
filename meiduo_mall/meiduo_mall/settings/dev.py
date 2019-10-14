@@ -85,6 +85,22 @@ TEMPLATES = [
     },
 ]
 
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [os.path.join(BASE_DIR, 'templates')],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+
 WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 
 # Database
@@ -312,7 +328,7 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # 当添加、修改、删除数据时，自动生成索引
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # 每页显示的页数
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 3
