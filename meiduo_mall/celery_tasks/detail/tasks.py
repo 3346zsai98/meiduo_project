@@ -60,7 +60,7 @@ def generate_static_sku_detail_html(sku_id):
 
     html_text = tempalte.render(context)
 
-    file_path = os.path.join(settings.STATICFILES_DIRS[0], 'detail/' + str(sku.id) + '.html')
+    file_path = os.path.join(settings.STATIC_GENERIC_HTML, 'detail/' + str(sku.id) + '.html')
 
     with open(file_path, 'w') as f:
         f.write(html_text)

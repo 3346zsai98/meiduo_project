@@ -49,7 +49,7 @@ class GoodsChannel(BaseModel):
 
 class Brand(BaseModel):
     """品牌"""
-    name = models.CharField(max_length=20, verbose_name='名称')
+    name = models .CharField(max_length=20, verbose_name='名称')
     logo = models.ImageField(verbose_name='Logo图片')
     first_letter = models.CharField(max_length=1, verbose_name='品牌首字母')
 

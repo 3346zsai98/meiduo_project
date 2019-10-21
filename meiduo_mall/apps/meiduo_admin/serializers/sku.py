@@ -3,6 +3,7 @@ from apps.goods.models import SKU, SKUSpecification
 from django.db import transaction
 from celery_tasks.detail.tasks import generate_task
 
+
 # class SpecRelatedSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = SKUSpecification
@@ -86,3 +87,9 @@ class SkuModelSerializer(serializers.ModelSerializer):
                 generate_task.delay(instance.id)
 
                 return instance
+
+
+# 图片创建中获取SKU的id 和name
+class ImageSkuSimpleSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()

@@ -29,3 +29,13 @@ class SpecOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SPUSpecification
         fields = '__all__'
+
+
+# 规格选项表操作
+
+class SpecsOptSerializer(serializers.ModelSerializer):
+    spec = serializers.StringRelatedField(read_only=True)
+    spec_id = serializers.IntegerField()
+    class Meta:
+        model = SpecificationOption
+        fields = "__all__"

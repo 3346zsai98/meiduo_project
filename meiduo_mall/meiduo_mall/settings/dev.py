@@ -269,6 +269,12 @@ STATIC_URL = '/static/'
 # 配置静态文件加载路径
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+# 生成项目中所有静态文件的目录
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
+
+# STATIC_GENERIC_HTML = STATIC_GENERIC_HTML = STATIC_ROOT[0]
+STATIC_GENERIC_HTML = STATIC_ROOT
+
 AUTH_USER_MODEL = 'users.User'
 
 # 指定自定义的用户认证后端
@@ -299,8 +305,10 @@ EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/'  # 邮箱�
 DEFAULT_FILE_STORAGE = 'utils.fastdfs.fastdfs_storage.FastDFSStorage'
 
 # FastDFS相关参数
-# FDFS_BASE_URL = 'http://192.168.142.136:8888/'
+# FDFS_BASE_URL = 'http://192.168.142.137:8888/'
 FDFS_BASE_URL = 'http://image.meiduo.site:8888/'
+
+FDFS_CLIENT_CONF = os.path.join(BASE_DIR, 'utils/fastdfs/client.conf')
 
 # 支付宝SDK配置参数
 ALIPAY_APPID = '2016101300673760'

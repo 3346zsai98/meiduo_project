@@ -1,9 +1,9 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
-from apps.goods.models import SPUSpecification
-from apps.meiduo_admin.serializers.specs import SPUSpecificationSerializer, SpecOptionSerializer
+from apps.goods.models import SPUSpecification, SpecificationOption
+from apps.meiduo_admin.serializers.specs import SPUSpecificationSerializer, SpecOptionSerializer, SpecsOptSerializer
 from apps.meiduo_admin.utils.pagination import MeiduoPagination
 
 
@@ -24,3 +24,16 @@ class SpecOptionView(ListAPIView):
         return SPUSpecification.objects.filter(spu_id=spu_id)
 
     serializer_class = SpecOptionSerializer
+
+
+# 规格选项表操作
+class SpecsOptViewSet(ModelViewSet):
+    queryset = SpecificationOption.objects.all()
+    serializer_class = SpecsOptSerializer
+    pagination_class = MeiduoPagination
+
+
+class SpucsSimpleView(ListAPIView):
+    queryset = SPUSpecification.objects.all()
+    serializer_class = SPUSpecificationSerializer
+
